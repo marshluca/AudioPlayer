@@ -243,7 +243,7 @@ void ASReadStreamCallBack
 	@synchronized (self)
 	{
 		if ((errorCode != AS_NO_ERROR && state != AS_INITIALIZED) ||
-			((state == AS_STOPPING || state == AS_STOPPED) &&
+			((/*state == AS_STOPPING || */state == AS_STOPPED) &&
 				stopReason != AS_STOPPING_TEMPORARILY))
 		{
 			return YES;
@@ -1006,9 +1006,9 @@ cleanup:
 {
 	@synchronized(self)
 	{
-		if (sampleRate > 0 && ![self isFinishing])
+		if (sampleRate > 0/* && ![self isFinishing]*/)
 		{
-			if (state != AS_PLAYING && state != AS_PAUSED && state != AS_BUFFERING)
+			if (state != AS_PLAYING && state != AS_PAUSED && state != AS_BUFFERING && state != AS_STOPPING)
 			{
 				return lastProgress;
 			}

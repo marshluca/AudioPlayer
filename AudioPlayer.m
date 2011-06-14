@@ -15,7 +15,7 @@
 
 @implementation AudioPlayer
 
-@synthesize streamer, button, url;
+@synthesize streamer, button, url, circleView;
 
 
 - (id)init
@@ -34,6 +34,7 @@
     [url release];
     [streamer release];
     [button release];
+    [circleView release];
 }
 
 /*
@@ -110,6 +111,19 @@
 }
 
 
+- (void)updateAudioProgress
+{
+    if (streamer.progress < streamer.duration ) {
+
+        [circleView setProgress:streamer.progress/streamer.duration];
+        
+    } else {
+        [circleView setProgress:0.0f];
+        [timer invalidate];
+    }
+}
+
+
 /*
  *  initialize a streamer 
  */
@@ -119,14 +133,37 @@
     
 	[self destroyStreamer];
     
+    circleView = nil;
+    [circleView release];
+    
     // NSString *urlString = @"http://58.254.132.8/90115000/fulltrack_dl/MP3_40_16_Stero/2011032303/300018.mp3";
 	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
-    
+
     // register the streamer on notification
 	[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playbackStateChanged:)
                                                  name:ASStatusChangedNotification
                                                object:streamer];
+}
+
+- (void)showProgress
+{
+    CGSize size = button.frame.size;
+    circleView = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];	
+    [circleView setProgress:0.0];
+    [circleView setColourR:0.2 G:0.2 B:0.9 A:1.0];
+    [button addSubview:circleView];
+    
+    // set up display updater
+    NSInvocation *updateAudioDisplayInvocation = 
+    [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(updateAudioProgress)]];
+    
+    [updateAudioDisplayInvocation setSelector:@selector(updateAudioProgress)];
+    [updateAudioDisplayInvocation setTarget:self];
+    
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                         invocation:updateAudioDisplayInvocation 
+                                            repeats:YES];
 }
 
 
@@ -177,6 +214,8 @@
     }
     else if ([streamer isPlaying])
 	{
+        if (!circleView) [self showProgress];
+        
 		[self setButtonImage:[UIImage imageNamed:@"stopbutton.png"]];
 	}
 	else if ([streamer isIdle])

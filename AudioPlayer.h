@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CircleProgressView.h"
 
 @class AudioStreamer;
 
@@ -15,11 +16,14 @@
     AudioStreamer *streamer;
     UIButton *button;   
     NSURL *url;
+    CircleProgressView *circleView;
+    NSTimer *timer;
 }
 
 @property (nonatomic, retain) AudioStreamer *streamer;
 @property (nonatomic, retain) UIButton *button;
 @property (nonatomic, retain) NSURL *url;
+@property (nonatomic, retain) CircleProgressView *circleView;
 
 - (void)createStreamer;
 - (void)destroyStreamer;
