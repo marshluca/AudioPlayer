@@ -94,6 +94,12 @@
  */
 - (void)destroyStreamer
 {
+    [self.circleView removeFromSuperview];
+    
+    self.circleView = nil;
+    
+    [self.circleView release];
+    
     [self setButtonImage:[UIImage imageNamed:@"playbutton.png"]];
     
 	if (streamer)

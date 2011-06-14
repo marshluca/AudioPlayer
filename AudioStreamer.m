@@ -422,8 +422,8 @@ void ASReadStreamCallBack
 			AudioQueueStop(audioQueue, true);
 		}
 
-		[self presentAlertWithTitle:NSLocalizedStringFromTable(@"File Error", @"Errors", nil)
-							message:NSLocalizedStringFromTable(@"Unable to configure network read stream.", @"Errors", nil)];
+		/*[self presentAlertWithTitle:NSLocalizedStringFromTable(@"File Error", @"Errors", nil)
+							message:NSLocalizedStringFromTable(@"Unable to configure network read stream.", @"Errors", nil)];*/
 	}
 }
 
