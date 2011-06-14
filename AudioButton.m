@@ -6,10 +6,12 @@
 //  Copyright 2011 Turned On Digital. You are free todo whatever you want with this code :)
 //
 
-#import "CircleProgressView.h"
+#import "AudioButton.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation CircleProgressView
+@implementation AudioButton
+
+@synthesize list;
 
 #pragma mark -
 #pragma mark Drawing Code:
@@ -37,9 +39,12 @@
 	 // the location of each colour change, these are between 0 and 1, zero is the first circle and 1 is the end circle, so 0.5 is in the middle.
 	 CGFloat locations[3] = { 0.0, 0.5 ,1.0 }; 
 	 // this is the colour components array, because we are using an RGBA system each colour has four components (four numbers associated with it).
-	 CGFloat components[12] = {  0.4, 0.4, 0.4, 0.9, // Start colour
+	 CGFloat components[12] = {
+         0.4, 0.4, 0.4, 0.9,    // Start colour
 		 0.9, 0.9, 0.9, 1.0,	// middle colour
-		 0.4, 0.4, 0.4, 0.9 }; // End colour
+		 0.4, 0.4, 0.4, 0.9
+     }; // End colour
+     
 	 myColorspace = CGColorSpaceCreateDeviceRGB(); 
 	 myGradient = CGGradientCreateWithColorComponents (myColorspace, components,locations, num_locations);
 	 
@@ -115,8 +120,8 @@
 	 myEndPoint.x = _innerCircleRect.origin.x + _innerCircleRect.size.width/2;
 	 myEndPoint.y = _innerCircleRect.origin.y + _innerCircleRect.size.width/2;
 	 // set the radias for start and endpoints a bit smaller, because we want to draw inside the outer circles.
-	 myStartRadius = _innerCircleRect.size.width/2 +1; 
-	 myEndRadius = _outerCircleRect.size.width/2 -1; 
+	 myStartRadius = _innerCircleRect.size.width/2+1; 
+	 myEndRadius = _outerCircleRect.size.width/2-1; 
      
 	 CGContextDrawRadialGradient(context, 
 								 myGradient, 
@@ -173,7 +178,7 @@
 #pragma mark -
 #pragma mark Superclass Methods:
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame list:(BOOL)isList {
     
     self = [super initWithFrame:frame];
     if (self) {
@@ -186,12 +191,12 @@
 		self.alpha = 1.0;
 		
 		// set class variables to default values
-		_r = 1.0;
+		_r = 0.1;
 		_g = 0.1;
-		_b = 0.1;
+		_b = 1.0;
 		_a = 1.0;
 		
-		_progress = 0.3;
+		_progress = 0.0;
 		
 
 		// find the radius and position for the largest circle that fits in the UIView's frame.
@@ -210,7 +215,7 @@
 			x = 0;
 		}
 		
-        int offset = 2;
+        int offset = isList ? 2 : 10;
         
 		// store the largest circle's position and radius in class variable.
 		_outerCircleRect = CGRectMake(x, y, radius, radius);

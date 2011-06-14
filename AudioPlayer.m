@@ -12,10 +12,9 @@
 #import <QuartzCore/CoreAnimation.h>
 #import <CFNetwork/CFNetwork.h>
 
-
 @implementation AudioPlayer
 
-@synthesize streamer, button, url, circleView;
+@synthesize streamer, button, url;
 
 
 - (id)init
@@ -34,7 +33,6 @@
     [url release];
     [streamer release];
     [button release];
-    [circleView release];
 }
 
 /*
@@ -94,13 +92,7 @@
  */
 - (void)destroyStreamer
 {
-    [self.circleView removeFromSuperview];
-    
-    self.circleView = nil;
-    
-    [self.circleView release];
-    
-    [self setButtonImage:[UIImage imageNamed:@"playbutton.png"]];
+    [self setButtonImage:[UIImage imageNamed:button.list ? @"play_list" : @"play"]];
     
 	if (streamer)
 	{
@@ -120,12 +112,10 @@
 - (void)updateAudioProgress
 {
     if (streamer.progress < streamer.duration ) {
-
-        [circleView setProgress:streamer.progress/streamer.duration];
-        
+        [button setProgress:streamer.progress/streamer.duration];        
     } else {
-        [circleView setProgress:0.0f];
-        [timer invalidate];
+        [button setProgress:0.0f];
+        //[timer invalidate];
     }
 }
 
@@ -138,10 +128,7 @@
     if (streamer) return;
     
 	[self destroyStreamer];
-    
-    circleView = nil;
-    [circleView release];
-    
+        
     // NSString *urlString = @"http://58.254.132.8/90115000/fulltrack_dl/MP3_40_16_Stero/2011032303/300018.mp3";
 	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
 
@@ -154,11 +141,8 @@
 
 - (void)showProgress
 {
-    CGSize size = button.frame.size;
-    circleView = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];	
-    [circleView setProgress:0.0];
-    [circleView setColourR:0.2 G:0.2 B:0.9 A:1.0];
-    [button addSubview:circleView];
+    [button setProgress:0.0];
+    [button setColourR:0.1 G:1.0 B:0.1 A:1.0];
     
     // set up display updater
     NSInvocation *updateAudioDisplayInvocation = 
@@ -178,13 +162,13 @@
  */
 -(void)startPlaying
 {    
-    [self setButtonImage:[UIImage imageNamed:@"loadingbutton.png"]];
+    [self setButtonImage:[UIImage imageNamed:button.list ? @"loading_list" : @"loading"]];
     [streamer start];
 }
 
 -(void)pausePlaying
 {
-	[self setButtonImage:[UIImage imageNamed:@"pausebutton.png"]];
+	[self setButtonImage:[UIImage imageNamed:button.list ? @"play_list" : @"play"]];
     [streamer pause];
 }
 
@@ -214,20 +198,20 @@
 {
 	if ([streamer isWaiting])
 	{
-		[self setButtonImage:[UIImage imageNamed:@"loadingbutton.png"]];
+		[self setButtonImage:[UIImage imageNamed:button.list ? @"loading_list" : @"loading"]];
         
         [self spinButton];
     }
     else if ([streamer isPlaying])
 	{
-        if (!circleView) [self showProgress];
+        [self showProgress];
         
-		[self setButtonImage:[UIImage imageNamed:@"stopbutton.png"]];
+		[self setButtonImage:[UIImage imageNamed:button.list ? @"stop_list" : @"stop"]];
 	}
 	else if ([streamer isIdle])
 	{
 		[self destroyStreamer];
-		[self setButtonImage:[UIImage imageNamed:@"playbutton.png"]];
+		[self setButtonImage:[UIImage imageNamed:button.list ? @"play_list" : @"play"]];
 	}
 }
 
