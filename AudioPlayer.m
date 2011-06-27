@@ -92,7 +92,9 @@
  */
 - (void)destroyStreamer
 {
-    [self setButtonImage:[UIImage imageNamed:button.list ? @"play_list" : @"play"]];
+    [self.button setProgress:0];
+    
+    [self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
     
 	if (streamer)
 	{
@@ -111,7 +113,7 @@
 
 - (void)updateAudioProgress
 {
-    if (streamer.progress < streamer.duration ) {
+    if (streamer.progress <= streamer.duration ) {
         [button setProgress:streamer.progress/streamer.duration];        
     } else {
         [button setProgress:0.0f];
@@ -162,23 +164,23 @@
  */
 -(void)startPlaying
 {    
-    [self setButtonImage:[UIImage imageNamed:button.list ? @"loading_list" : @"loading"]];
+    [self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
     [streamer start];
 }
 
 -(void)pausePlaying
 {
-	[self setButtonImage:[UIImage imageNamed:button.list ? @"play_list" : @"play"]];
+	[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
     [streamer pause];
 }
 
-- (void)playOrPause
+- (void)playOrStop
 {        
     if (!streamer) [self createStreamer]; // for it may be destroyed 
 
     @try {
         if (streamer.state == AS_PLAYING) {
-            [self pausePlaying];
+            [self destroyStreamer];
         } else {
             [self startPlaying];
         }
@@ -196,9 +198,9 @@
  */
 - (void)playbackStateChanged:(NSNotification *)aNotification
 {
-	if ([streamer isWaiting])
+	if ([streamer isWaiting] && (streamer.state != AS_STOPPED)  )
 	{
-		[self setButtonImage:[UIImage imageNamed:button.list ? @"loading_list" : @"loading"]];
+		[self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
         
         [self spinButton];
     }
@@ -206,12 +208,12 @@
 	{
         [self showProgress];
         
-		[self setButtonImage:[UIImage imageNamed:button.list ? @"stop_list" : @"stop"]];
+		[self setButtonImage:[UIImage imageNamed:button.list ? @"stop" : @"stop"]];
 	}
 	else if ([streamer isIdle])
 	{
 		[self destroyStreamer];
-		[self setButtonImage:[UIImage imageNamed:button.list ? @"play_list" : @"play"]];
+		[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
 	}
 }
 

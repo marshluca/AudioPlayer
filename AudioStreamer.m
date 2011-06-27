@@ -243,7 +243,7 @@ void ASReadStreamCallBack
 	@synchronized (self)
 	{
 		if ((errorCode != AS_NO_ERROR && state != AS_INITIALIZED) ||
-			((/*state == AS_STOPPING || */state == AS_STOPPED) &&
+			((/*state == AS_STOPPING ||*/ state == AS_STOPPED) &&
 				stopReason != AS_STOPPING_TEMPORARILY))
 		{
 			return YES;

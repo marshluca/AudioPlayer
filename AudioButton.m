@@ -120,8 +120,8 @@
 	 myEndPoint.x = _innerCircleRect.origin.x + _innerCircleRect.size.width/2;
 	 myEndPoint.y = _innerCircleRect.origin.y + _innerCircleRect.size.width/2;
 	 // set the radias for start and endpoints a bit smaller, because we want to draw inside the outer circles.
-	 myStartRadius = _innerCircleRect.size.width/2+1; 
-	 myEndRadius = _outerCircleRect.size.width/2-1; 
+	 myStartRadius = _innerCircleRect.size.width/2; 
+	 myEndRadius = _outerCircleRect.size.width/2; 
      
 	 CGContextDrawRadialGradient(context, 
 								 myGradient, 
@@ -215,18 +215,16 @@
 			x = 0;
 		}
 		
-        int offset = isList ? 2 : 10;
+        int offset = isList ? 4 : 8;
         
 		// store the largest circle's position and radius in class variable.
 		_outerCircleRect = CGRectMake(x, y, radius, radius);
 		// store the inner circles rect, this inner circle will have a radius 10pixels smaller than the outer circle.
 		// we want to the inner circle to be in the middle of the outer circle.
-		_innerCircleRect = CGRectMake(x+offset, y+offset, radius-2*offset , radius-2*offset);
-        
-        LOGRECT(_innerCircleRect);
-        LOGRECT(_outerCircleRect);
-		
+		_innerCircleRect = CGRectMake(x+offset, y+offset, radius-2*offset , radius-2*offset);		
     }
+    
+    self.imageView.layer.zPosition = 0;
     
     return self;
 }
