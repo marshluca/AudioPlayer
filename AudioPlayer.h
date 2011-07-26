@@ -29,4 +29,5 @@
 - (void)spinButton;
 - (void)setButtonImage:(UIImage *)image;
 
+
 @end

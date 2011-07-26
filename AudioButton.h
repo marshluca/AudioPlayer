@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 
 
+typedef enum {
+    AudioStateReady,
+    AudioStatePlaying,
+    AudioStateInit,
+    AudioStateStop
+} AudioState;
+
 @interface AudioButton : UIButton {
 
 	CGFloat _r;
@@ -22,9 +29,11 @@
 	CGRect _innerCircleRect;
     
     BOOL list;
+    AudioState state;
 }
 
 @property (nonatomic, assign) BOOL list;
+@property (nonatomic, assign) AudioState state;
 
 - (id)initWithFrame:(CGRect)frame list:(BOOL)isList;
 -(void) setProgress:(CGFloat) newProgress;		// set the component's value

@@ -8,16 +8,29 @@
 
 #import "AudioButton.h"
 #import <QuartzCore/QuartzCore.h>
+#include <math.h>
+static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 @implementation AudioButton
 
-@synthesize list;
+@synthesize list,state;
 
 #pragma mark -
 #pragma mark Drawing Code:
 
 
  - (void)drawRect:(CGRect)rect {
+     
+     [super drawRect:rect];
+          
+     NSString *loading = self.list ? @"loading" : @"loading";
+     NSString *play = self.list ? @"play_s" : @"play";
+     NSString *stop = self.list ? @"stop_s" : @"stop";
+     
+     UIImage *image = [UIImage imageNamed:state == AudioStateReady  ? loading : (state == AudioStatePlaying? stop : play)];
+     [image drawInRect:rect];
+     
+     
  // Drawing code.
 	 
 	 // get the drawing canvas (CGContext):
@@ -62,23 +75,22 @@
 	 /*CGContextDrawRadialGradient(context, 
 								 myGradient, 
 								 myStartPoint, myStartRadius, myEndPoint, myEndRadius, 0);
-	 CGGradientRelease(myGradient);
+	 CGGradientRelease(myGradient);*/
 	 
 	 // draw outline so that the edges are smooth:
 	
 	 // set line width
-	 CGContextSetLineWidth(context, 1);
+	 //CGContextSetLineWidth(context, 1);
 	 // set the colour when drawing lines R,G,B,A. (we will set it to the same colour we used as the start and end point of our gradient )
-	 CGContextSetRGBStrokeColor(context, 0.4,0.4,0.4,0.9);
+	 /*CGContextSetRGBStrokeColor(context, 0.4,0.4,0.4,0.9);
 	 
 	 // draw an ellipse in the provided rectangle
 	 CGContextAddEllipseInRect(context, _outerCircleRect);
-	 CGContextStrokePath(context);
-	 
-	 CGContextAddEllipseInRect(context, _innerCircleRect);
 	 CGContextStrokePath(context);*/
 	 
-	 
+	 /*CGContextAddEllipseInRect(context, _innerCircleRect);
+	 CGContextStrokePath(context);*/
+     
 	 
 	 // Draw the progress:
 	 
@@ -92,7 +104,7 @@
 	 CGContextAddArc(context, 
 					 _outerCircleRect.origin.x + _outerCircleRect.size.width/2,
 					 _outerCircleRect.origin.y + _outerCircleRect.size.width/2,
-					 _outerCircleRect.size.width/2 - 1,
+					 _outerCircleRect.size.width/2-1,
 					 -M_PI/2,
 					 (-M_PI/2 + _progress*2*M_PI), 0);
 	 CGContextAddArc(context, 
@@ -149,6 +161,16 @@
 
 	 // restore the context's state when we are done with it:
 	 CGContextRestoreGState(context);
+     
+     
+     /*CGPathRef circlePath = CGPathCreateMutable();
+     CGPathAddEllipseInRect(circlePath , NULL , rect);
+     CAShapeLayer *circle = [[CAShapeLayer alloc] init];
+     circle.path = circlePath;
+     circle.opacity = 0.5;
+     [self.imageView.layer addSublayer:circle];
+     CGPathRelease( circlePath );
+     [circle release];*/
  }
 
 
@@ -181,6 +203,9 @@
 - (id)initWithFrame:(CGRect)frame list:(BOOL)isList {
     
     self = [super initWithFrame:frame];
+    
+    self.list = isList;
+    
     if (self) {
         // Initialization code.
 		
@@ -192,8 +217,8 @@
 		
 		// set class variables to default values
 		_r = 0.1;
-		_g = 0.1;
-		_b = 1.0;
+		_g = 1.0;
+		_b = 0.1;
 		_a = 1.0;
 		
 		_progress = 0.0;
@@ -215,7 +240,7 @@
 			x = 0;
 		}
 		
-        int offset = isList ? 4 : 8;
+        int offset = isList ? 3 : 6;
         
 		// store the largest circle's position and radius in class variable.
 		_outerCircleRect = CGRectMake(x, y, radius, radius);
@@ -224,7 +249,7 @@
 		_innerCircleRect = CGRectMake(x+offset, y+offset, radius-2*offset , radius-2*offset);		
     }
     
-    self.imageView.layer.zPosition = 0;
+    self.state = AudioStateInit;
     
     return self;
 }

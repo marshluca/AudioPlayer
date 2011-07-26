@@ -33,6 +33,7 @@
     [url release];
     [streamer release];
     [button release];
+    [timer invalidate];
 }
 
 /*
@@ -82,9 +83,11 @@
 
 - (void)setButtonImage:(UIImage *)image
 {
-	[button.layer removeAllAnimations];
+	//[button.layer removeAllAnimations];
     
-    [button setImage:image forState:UIControlStateNormal];		    
+    //[image drawInRect:button.bounds];
+    
+    //[button setImage:image forState:UIControlStateNormal];		    
 }
 
 /*
@@ -92,9 +95,9 @@
  */
 - (void)destroyStreamer
 {
+    button.state = AudioStateStop;
+    [button.layer removeAllAnimations];
     [self.button setProgress:0];
-    
-    [self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
     
 	if (streamer)
 	{
@@ -116,8 +119,7 @@
     if (streamer.progress <= streamer.duration ) {
         [button setProgress:streamer.progress/streamer.duration];        
     } else {
-        [button setProgress:0.0f];
-        //[timer invalidate];
+        [button setProgress:0.0f];        
     }
 }
 
@@ -143,8 +145,9 @@
 
 - (void)showProgress
 {
+    //[button setColourR:0.1 G:1.0 B:0.1 A:1.0];
     [button setProgress:0.0];
-    [button setColourR:0.1 G:1.0 B:0.1 A:1.0];
+    
     
     // set up display updater
     NSInvocation *updateAudioDisplayInvocation = 
@@ -164,13 +167,15 @@
  */
 -(void)startPlaying
 {    
-    [self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
+    //[self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
     [streamer start];
+    [button setNeedsLayout];    
+    [button setNeedsDisplay];
 }
 
 -(void)pausePlaying
 {
-	[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
+	//[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
     [streamer pause];
 }
 
@@ -200,20 +205,26 @@
 {
 	if ([streamer isWaiting] && (streamer.state != AS_STOPPED)  )
 	{
-		[self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
-        
-        [self spinButton];
+        if (streamer.state == AS_BUFFERING) {
+            [button.layer removeAllAnimations];        
+            button.state = AudioStateStop;
+            [self destroyStreamer];		
+        } else {
+            button.state = AudioStateReady;
+            [self spinButton];            
+        }        
     }
     else if ([streamer isPlaying])
 	{
+        [button.layer removeAllAnimations];
+        button.state = AudioStatePlaying;
         [self showProgress];
-        
-		[self setButtonImage:[UIImage imageNamed:button.list ? @"stop" : @"stop"]];
 	}
 	else if ([streamer isIdle])
 	{
-		[self destroyStreamer];
-		[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
+        [button.layer removeAllAnimations];        
+        button.state = AudioStateStop;
+		[self destroyStreamer];		
 	}
 }
 
