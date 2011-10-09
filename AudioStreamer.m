@@ -269,8 +269,8 @@ void ASReadStreamCallBack
 {
 	@synchronized(self)
 	{
-		if ([self isFinishing] ||
-			state == AS_STARTING_FILE_THREAD||
+		if (/*[self isFinishing] ||*/
+			state == AS_STARTING_FILE_THREAD ||
 			state == AS_WAITING_FOR_DATA ||
 			state == AS_WAITING_FOR_QUEUE_TO_START ||
 			state == AS_BUFFERING)
@@ -435,10 +435,12 @@ void ASReadStreamCallBack
 		if (err)
 		{
 			char *errChars = (char *)&err;
-			NSLog(@"%@ err: %c%c%c%c %d\n",
-				[AudioStreamer stringForErrorCode:anErrorCode],
-				errChars[3], errChars[2], errChars[1], errChars[0],
-				(int)err);
+            if (![self isFinishing]) {
+                NSLog(@"%@ err: %c%c%c%c %d\n",
+                      [AudioStreamer stringForErrorCode:anErrorCode],
+                      errChars[3], errChars[2], errChars[1], errChars[0],
+                      (int)err);
+            }
 		}
 		else
 		{
@@ -454,8 +456,12 @@ void ASReadStreamCallBack
 			AudioQueueStop(audioQueue, true);
 		}
 
-		[self presentAlertWithTitle:NSLocalizedStringFromTable(@"File Error", @"Errors", nil)
-							message:NSLocalizedStringFromTable(@"Unable to configure network read stream.", @"Errors", nil)];
+        if (![self isFinishing]) {
+//            [self presentAlertWithTitle:NSLocalizedStringFromTable(@"File Error", @"Errors", nil)
+//                                message:NSLocalizedStringFromTable(@"Unable to configure network read stream.", @"Errors", nil)];
+            [self presentAlertWithTitle:@"播放停止"
+                                message:@"网络出现故障,请重试一次."];
+        }		
 	}
 }
 

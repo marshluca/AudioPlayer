@@ -199,7 +199,7 @@
     
     LOG(@"streamer's state: %d", streamer.state);
     
-	if ([streamer isWaiting] && (streamer.state != AS_STOPPED)  )
+	if ([streamer isWaiting])
 	{
         /*if (streamer.state == AS_BUFFERING) {
             [button.layer removeAllAnimations];        
