@@ -108,15 +108,15 @@
     
 	if (streamer)
 	{
-        // remove notification observer for streamer
-		[[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                        name:ASStatusChangedNotification
-                                                      object:streamer];		
-
         // release streamer
 		[streamer stop];
 		[streamer release];
 		streamer = nil;
+        
+        // remove notification observer for streamer
+		[[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                        name:ASStatusChangedNotification
+                                                      object:streamer];		
 	}
 }
 
@@ -126,7 +126,6 @@
     
 	[self destroyStreamer];
         
-    // NSString *urlString = @"http://58.254.132.8/90115000/fulltrack_dl/MP3_40_16_Stero/2011032303/300018.mp3";
 	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
 
     // register the streamer on notification
@@ -154,39 +153,28 @@
 }
 
 
-/*
- *  handle the playback when loading an audio
- */
--(void)startPlaying
-{    
-    //[self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
-    [streamer start];
-    [button setNeedsLayout];    
-    [button setNeedsDisplay];
-}
-
--(void)pausePlaying
-{
-	//[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
-    [streamer pause];
-}
-
-- (void)playOrStop
+- (void)play
 {        
-    if (!streamer) [self createStreamer]; // for it may be destroyed 
+    // the player may be destroyed 
+    if (!streamer) [self createStreamer]; 
 
     @try {
         if (streamer.state == AS_PLAYING) {
-            [self pausePlaying];
-        } else {
-            [self startPlaying];
+            //[self setButtonImage:[UIImage imageNamed:button.list ? @"play" : @"play"]];
+            [streamer pause];
+        } else  {
+            // [self setButtonImage:[UIImage imageNamed:button.list ? @"loading" : @"loading"]];
+            [streamer start];
         }
+        
+        [button setNeedsLayout];    
+        [button setNeedsDisplay];
     }
     @catch (NSException *exception) {
-        NSLog(@"got an exception when play or pause: %@", [exception reason]);
+        NSLog(@"got an exception when play: %@", [exception reason]);
     }
     @finally {
-        
+
     }
 }
 
@@ -201,14 +189,8 @@
     
 	if ([streamer isWaiting])
 	{
-        /*if (streamer.state == AS_BUFFERING) {
-            [button.layer removeAllAnimations];        
-            button.state = AudioStateStop;
-            [self destroyStreamer];
-        } else */{
-            button.state = AudioStateReady;
-            [self spinButton];            
-        }        
+        button.state = AudioStateReady;
+        [self spinButton];
     }
     else if ([streamer isPlaying])
 	{
@@ -216,6 +198,16 @@
         button.state = AudioStatePlaying;
         [self showProgress];
 	}
+    else if ([streamer isPaused])
+    {
+        
+    }
+    else if ([streamer isFinishing])
+    {
+        [button.layer removeAllAnimations];        
+        button.state = AudioStatePlaying;
+        [self showProgress];
+    }
 	else if ([streamer isIdle])
 	{
         [button.layer removeAllAnimations];        

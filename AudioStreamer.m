@@ -269,8 +269,7 @@ void ASReadStreamCallBack
 {
 	@synchronized(self)
 	{
-		if (/*[self isFinishing] ||*/
-			state == AS_STARTING_FILE_THREAD ||
+		if (state == AS_STARTING_FILE_THREAD ||
 			state == AS_WAITING_FOR_DATA ||
 			state == AS_WAITING_FOR_QUEUE_TO_START ||
 			state == AS_BUFFERING)
@@ -834,36 +833,6 @@ cleanup:
 	[pool release];
 }
 
-//
-// start
-//
-// Calls startInternal in a new thread.
-//
-- (void)start
-{
-	@synchronized (self)
-	{
-		if (state == AS_PAUSED)
-		{
-			[self pause];
-		}
-		else if (state == AS_INITIALIZED)
-		{
-			NSAssert([[NSThread currentThread] isEqual:[NSThread mainThread]], @"Playback can only be started from the main thread.");
-			notificationCenter = [[NSNotificationCenter defaultCenter] retain];
-			self.state = AS_STARTING_FILE_THREAD;
-
-			internalThread =
-				[[NSThread alloc]
-					initWithTarget:self
-					selector:@selector(startInternal)
-					object:nil];
-            
-			[internalThread start];
-		}
-	}
-}
-
 
 // internalSeekToTime:
 //
@@ -1067,9 +1036,43 @@ cleanup:
 
 
 //
+// start
+//
+// Calls startInternal in a new thread.
+//
+- (void)start
+{
+	@synchronized (self)
+	{
+		if (state == AS_PAUSED)
+		{
+			[self pause]; // will resume the player
+		}
+		else if (state == AS_INITIALIZED)
+		{
+			NSAssert([[NSThread currentThread] isEqual:[NSThread mainThread]], @"Playback can only be started from the main thread.");
+            
+			notificationCenter = [[NSNotificationCenter defaultCenter] retain];
+			self.state = AS_STARTING_FILE_THREAD;
+            
+			internalThread = [[NSThread alloc] initWithTarget:self
+                                                     selector:@selector(startInternal)
+                                                       object:nil];                              
+            
+			[internalThread start];
+		}
+        else if (state == AS_PLAYING)
+        {
+            // do nothing
+        }
+	}
+}
+
+
+//
 // pause
 //
-// A togglable pause function.
+// A togglable pause function between pause and play
 //
 - (void)pause
 {

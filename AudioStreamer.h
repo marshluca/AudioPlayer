@@ -161,6 +161,7 @@ extern NSString * const ASStatusChangedNotification;
 - (void)start;
 - (void)stop;
 - (void)pause;
+- (BOOL)isFinishing;
 - (BOOL)isPlaying;
 - (BOOL)isPaused;
 - (BOOL)isWaiting;
