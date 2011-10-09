@@ -33,6 +33,7 @@ NSString * const AS_NETWORK_CONNECTION_FAILED_STRING = @"Network connection fail
 NSString * const AS_AUDIO_BUFFER_TOO_SMALL_STRING = @"Audio packets are larger than kAQDefaultBufSize.";
 
 @interface AudioStreamer ()
+
 @property (readwrite) AudioStreamerState state;
 
 - (void)handlePropertyChangeForFileStream:(AudioFileStreamID)inAudioFileStream
@@ -44,9 +45,11 @@ NSString * const AS_AUDIO_BUFFER_TOO_SMALL_STRING = @"Audio packets are larger t
              numberPackets:(UInt32)inNumberPackets
         packetDescriptions:(AudioStreamPacketDescription *)inPacketDescriptions;
 
-- (void)handleBufferCompleteForQueue:(AudioQueueRef)inAQ buffer:(AudioQueueBufferRef)inBuffer;
+- (void)handleBufferCompleteForQueue:(AudioQueueRef)inAQ 
+                              buffer:(AudioQueueBufferRef)inBuffer;
 
-- (void)handlePropertyChangeForQueue:(AudioQueueRef)inAQ propertyID:(AudioQueuePropertyID)inID;
+- (void)handlePropertyChangeForQueue:(AudioQueueRef)inAQ 
+                          propertyID:(AudioQueuePropertyID)inID;
 
 #if TARGET_OS_IPHONE
 - (void)handleInterruptionChangeToState:(AudioQueuePropertyID)inInterruptionState;
@@ -57,6 +60,9 @@ NSString * const AS_AUDIO_BUFFER_TOO_SMALL_STRING = @"Audio packets are larger t
 - (void)handleReadFromStream:(CFReadStreamRef)aStream eventType:(CFStreamEventType)eventType;
 
 @end
+
+
+
 
 #pragma mark Audio Callback Function Prototypes
 
@@ -205,11 +211,7 @@ void ASReadStreamCallBack
 @synthesize bitRate;
 @synthesize httpHeaders;
 
-//
-// initWithURL
-//
-// Init method for the object.
-//
+
 - (id)initWithURL:(NSURL *)aURL
 {
 	self = [super init];
@@ -221,11 +223,6 @@ void ASReadStreamCallBack
 	return self;
 }
 
-//
-// dealloc
-//
-// Releases instance memory.
-//
 - (void)dealloc
 {
 	[self stop];
@@ -233,18 +230,50 @@ void ASReadStreamCallBack
 	[super dealloc];
 }
 
-//
-// isFinishing
-//
-// returns YES if the audio has reached a stopping condition.
-//
 - (BOOL)isFinishing
 {
-	@synchronized (self)
+    @synchronized (self)
 	{
 		if ((errorCode != AS_NO_ERROR && state != AS_INITIALIZED) ||
-			((/*state == AS_STOPPING ||*/ state == AS_STOPPED) &&
-				stopReason != AS_STOPPING_TEMPORARILY))
+			((state == AS_STOPPING || state == AS_STOPPED) &&
+             stopReason != AS_STOPPING_TEMPORARILY))
+		{
+			return YES;
+		}
+	}
+    
+	return NO;
+}
+
+- (BOOL)isPlaying
+{
+	if (state == AS_PLAYING)
+	{
+		return YES;
+	}
+	
+	return NO;
+}
+
+- (BOOL)isPaused
+{
+	if (state == AS_PAUSED)
+	{
+		return YES;
+	}
+	
+	return NO;
+}
+
+- (BOOL)isWaiting
+{
+	@synchronized(self)
+	{
+		if ([self isFinishing] ||
+			state == AS_STARTING_FILE_THREAD||
+			state == AS_WAITING_FOR_DATA ||
+			state == AS_WAITING_FOR_QUEUE_TO_START ||
+			state == AS_BUFFERING)
 		{
 			return YES;
 		}
@@ -252,6 +281,18 @@ void ASReadStreamCallBack
 	
 	return NO;
 }
+
+- (BOOL)isIdle
+{
+    // 播放完毕, 空闲状态
+	if (state == AS_INITIALIZED)
+	{
+		return YES;
+	}
+	
+	return NO;
+}
+
 
 //
 // runLoopShouldExit
@@ -262,9 +303,10 @@ void ASReadStreamCallBack
 {
 	@synchronized(self)
 	{
-		if (errorCode != AS_NO_ERROR ||
-			(state == AS_STOPPED &&
-			stopReason != AS_STOPPING_TEMPORARILY))
+        // 存在错误码,或非临时性的播放停止时, 需要终止streamer
+		if ( errorCode != AS_NO_ERROR ||
+			 (state == AS_STOPPED && stopReason != AS_STOPPING_TEMPORARILY)
+            )
 		{
 			return YES;
 		}
@@ -273,17 +315,7 @@ void ASReadStreamCallBack
 	return NO;
 }
 
-//
-// stringForErrorCode:
-//
-// Converts an error code to a string that can be localized or presented
-// to the user.
-//
-// Parameters:
-//    anErrorCode - the error code to convert
-//
-// returns the string representation of the error code
-//
+
 + (NSString *)stringForErrorCode:(AudioStreamerErrorCode)anErrorCode
 {
 	switch (anErrorCode)
@@ -422,8 +454,8 @@ void ASReadStreamCallBack
 			AudioQueueStop(audioQueue, true);
 		}
 
-		/*[self presentAlertWithTitle:NSLocalizedStringFromTable(@"File Error", @"Errors", nil)
-							message:NSLocalizedStringFromTable(@"Unable to configure network read stream.", @"Errors", nil)];*/
+		[self presentAlertWithTitle:NSLocalizedStringFromTable(@"File Error", @"Errors", nil)
+							message:NSLocalizedStringFromTable(@"Unable to configure network read stream.", @"Errors", nil)];
 	}
 }
 
@@ -435,12 +467,8 @@ void ASReadStreamCallBack
 //
 - (void)mainThreadStateNotification
 {
-	NSNotification *notification =
-		[NSNotification
-			notificationWithName:ASStatusChangedNotification
-			object:self];
-	[[NSNotificationCenter defaultCenter]
-		postNotification:notification];
+	NSNotification *notification = [NSNotification notificationWithName:ASStatusChangedNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 //
@@ -476,74 +504,6 @@ void ASReadStreamCallBack
 	}
 }
 
-//
-// isPlaying
-//
-// returns YES if the audio currently playing.
-//
-- (BOOL)isPlaying
-{
-	if (state == AS_PLAYING)
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-//
-// isPaused
-//
-// returns YES if the audio currently playing.
-//
-- (BOOL)isPaused
-{
-	if (state == AS_PAUSED)
-	{
-		return YES;
-	}
-	
-	return NO;
-}
-
-//
-// isWaiting
-//
-// returns YES if the AudioStreamer is waiting for a state transition of some
-// kind.
-//
-- (BOOL)isWaiting
-{
-	@synchronized(self)
-	{
-		if ([self isFinishing] ||
-			state == AS_STARTING_FILE_THREAD||
-			state == AS_WAITING_FOR_DATA ||
-			state == AS_WAITING_FOR_QUEUE_TO_START ||
-			state == AS_BUFFERING)
-		{
-			return YES;
-		}
-	}
-	
-	return NO;
-}
-
-//
-// isIdle
-//
-// returns YES if the AudioStream is in the AS_INITIALIZED state (i.e.
-// isn't doing anything).
-//
-- (BOOL)isIdle
-{
-	if (state == AS_INITIALIZED)
-	{
-		return YES;
-	}
-	
-	return NO;
-}
 
 //
 // hintForFileExtension:
@@ -883,16 +843,16 @@ cleanup:
 		}
 		else if (state == AS_INITIALIZED)
 		{
-			NSAssert([[NSThread currentThread] isEqual:[NSThread mainThread]],
-				@"Playback can only be started from the main thread.");
-			notificationCenter =
-				[[NSNotificationCenter defaultCenter] retain];
+			NSAssert([[NSThread currentThread] isEqual:[NSThread mainThread]], @"Playback can only be started from the main thread.");
+			notificationCenter = [[NSNotificationCenter defaultCenter] retain];
 			self.state = AS_STARTING_FILE_THREAD;
+
 			internalThread =
 				[[NSThread alloc]
 					initWithTarget:self
 					selector:@selector(startInternal)
 					object:nil];
+            
 			[internalThread start];
 		}
 	}

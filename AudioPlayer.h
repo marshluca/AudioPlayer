@@ -29,5 +29,11 @@
 - (void)spinButton;
 - (void)setButtonImage:(UIImage *)image;
 
+/*
+- (void)start;
+- (void)pause;
+- (void)play;
+- (void)stop;
+*/
 
 @end

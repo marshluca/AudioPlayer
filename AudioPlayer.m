@@ -90,9 +90,16 @@
     //[button setImage:image forState:UIControlStateNormal];		    
 }
 
-/*
- *  stop and destroy the streamer
- */
+- (void)updateAudioProgress
+{
+    if (streamer.progress <= streamer.duration ) {
+        [button setProgress:streamer.progress/streamer.duration];        
+    } else {
+        [button setProgress:0.0f];        
+    }
+}
+
+
 - (void)destroyStreamer
 {
     button.state = AudioStateStop;
@@ -113,20 +120,6 @@
 	}
 }
 
-
-- (void)updateAudioProgress
-{
-    if (streamer.progress <= streamer.duration ) {
-        [button setProgress:streamer.progress/streamer.duration];        
-    } else {
-        [button setProgress:0.0f];        
-    }
-}
-
-
-/*
- *  initialize a streamer 
- */
 - (void)createStreamer
 {   
     if (streamer) return;
@@ -147,8 +140,7 @@
 {
     //[button setColourR:0.1 G:1.0 B:0.1 A:1.0];
     [button setProgress:0.0];
-    
-    
+        
     // set up display updater
     NSInvocation *updateAudioDisplayInvocation = 
     [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(updateAudioProgress)]];
@@ -185,7 +177,7 @@
 
     @try {
         if (streamer.state == AS_PLAYING) {
-            [self destroyStreamer];
+            [self pausePlaying];
         } else {
             [self startPlaying];
         }
@@ -201,15 +193,19 @@
 /*
  *  observe the notification listener when loading an audio
  */
-- (void)playbackStateChanged:(NSNotification *)aNotification
+- (void)playbackStateChanged:(NSNotification *)notification
 {
+    // AudioStreamer *theStreamer = [notification object];
+    
+    LOG(@"streamer's state: %d", streamer.state);
+    
 	if ([streamer isWaiting] && (streamer.state != AS_STOPPED)  )
 	{
-        if (streamer.state == AS_BUFFERING) {
+        /*if (streamer.state == AS_BUFFERING) {
             [button.layer removeAllAnimations];        
             button.state = AudioStateStop;
-            [self destroyStreamer];		
-        } else {
+            [self destroyStreamer];
+        } else */{
             button.state = AudioStateReady;
             [self spinButton];            
         }        
