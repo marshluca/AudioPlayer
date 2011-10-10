@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AudioButton.h"
 
+@class AudioButton;
 @class AudioStreamer;
-
 
 @interface AudioPlayer : NSObject {
     AudioStreamer *streamer;
@@ -23,12 +22,8 @@
 @property (nonatomic, retain) AudioButton *button;
 @property (nonatomic, retain) NSURL *url;
 
-- (void)createStreamer;
-- (void)destroyStreamer;
 - (void)play;
 - (void)buffer;
 - (void)stop;
-- (void)buffer;
-- (void)setButtonImage:(UIImage *)image;
 
 @end

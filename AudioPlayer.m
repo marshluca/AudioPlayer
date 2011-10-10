@@ -7,6 +7,7 @@
 //
 
 #import "AudioPlayer.h"
+#import "AudioButton.h"
 #import "AudioStreamer.h"
 
 @implementation AudioPlayer
@@ -35,6 +36,41 @@
 }
 
 
+- (void)destroyStreamer
+{
+    button.state = AudioStateStop;
+    [button stopSpin];
+    [self.button setProgress:0];
+    
+    // release streamer
+	if (streamer)
+	{        
+		[streamer stop];
+		[streamer release];
+		streamer = nil;
+        
+        // remove notification observer for streamer
+		[[NSNotificationCenter defaultCenter] removeObserver:self 
+                                                        name:ASStatusChangedNotification
+                                                      object:streamer];		
+	}
+}
+
+- (void)createStreamer
+{   
+    if (streamer) return;
+    
+	[self destroyStreamer];
+    
+	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
+    
+    // register the streamer on notification
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playbackStateChanged:)
+                                                 name:ASStatusChangedNotification
+                                               object:streamer];
+}
+
 
 - (void)setButtonImage:(UIImage *)image
 {
@@ -52,41 +88,6 @@
     }
 }
 
-
-- (void)destroyStreamer
-{
-    button.state = AudioStateStop;
-    [button stopSpin];
-    [self.button setProgress:0];
-    
-	if (streamer)
-	{
-        // release streamer
-		[streamer stop];
-		[streamer release];
-		streamer = nil;
-        
-        // remove notification observer for streamer
-		[[NSNotificationCenter defaultCenter] removeObserver:self 
-                                                        name:ASStatusChangedNotification
-                                                      object:streamer];		
-	}
-}
-
-- (void)createStreamer
-{   
-    if (streamer) return;
-    
-	[self destroyStreamer];
-        
-	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
-
-    // register the streamer on notification
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playbackStateChanged:)
-                                                 name:ASStatusChangedNotification
-                                               object:streamer];
-}
 
 - (void)showProgress
 {    
