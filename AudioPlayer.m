@@ -12,7 +12,6 @@
 
 @implementation AudioPlayer
 
-
 @synthesize streamer, button, url;
 
 
@@ -36,11 +35,51 @@
 }
 
 
+- (void)play
+{        
+    if (!streamer) {
+        
+        self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
+        
+        // set up display updater
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:
+                                    [self methodSignatureForSelector:@selector(updateProgress)]];    
+        [invocation setSelector:@selector(updateProgress)];
+        [invocation setTarget:self];
+        
+        LOG(@"init streamer and set time updater...");
+        
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+                                             invocation:invocation 
+                                                repeats:YES];
+        
+        // register the streamer on notification
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(playbackStateChanged:)
+                                                     name:ASStatusChangedNotification
+                                                   object:streamer];
+
+    }
+    
+    if ([streamer isPlaying]) {
+        [streamer pause];
+    } else {
+        [streamer start];
+    }
+        
+    [button setNeedsLayout];    
+    [button setNeedsDisplay];
+}
+
+
 - (void)stop
 {
     button.state = AudioStateStop;
+    [button setProgress:0];
     [button stopSpin];
-    [self.button setProgress:0];
+    [button release]; 
+    // 避免播放器的闪烁问题
+    button = nil;
     
     // release streamer
 	if (streamer)
@@ -56,27 +95,12 @@
 	}
 }
 
-- (void)createStreamer
-{   
-    if (streamer) return;
-    
-	[self stop];
-    
-	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
-    
-    // register the streamer on notification
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playbackStateChanged:)
-                                                 name:ASStatusChangedNotification
-                                               object:streamer];
-}
-
 
 - (void)setButtonImage:(UIImage *)image
 {
-	//[button.layer removeAllAnimations];    
-    //[image drawInRect:button.bounds];
-    //[button setImage:image forState:UIControlStateNormal];		    
+	// [button.layer removeAllAnimations];    
+    // [image drawInRect:button.bounds];
+    // [button setImage:image forState:UIControlStateNormal];		    
 }
 
 - (void)updateProgress
@@ -89,75 +113,28 @@
 }
 
 
-- (void)showProgress
-{    
-    [button setProgress:0.0];
-    // [button setColourR:0.1 G:1.0 B:0.1 A:1.0];       
-    
-    // set up display updater
-    NSInvocation *updateAudioDisplayInvocation = 
-    [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(updateProgress)]];
-    
-    [updateAudioDisplayInvocation setSelector:@selector(updateProgress)];
-    [updateAudioDisplayInvocation setTarget:self];
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                         invocation:updateAudioDisplayInvocation 
-                                            repeats:YES];
-}
-
-
-- (void)play
-{        
-    // the player may be destroyed 
-    if (!streamer) [self createStreamer]; 
-    
-    if ([streamer isPlaying]) {
-        [streamer pause];
-    } else {
-        [streamer start];
-    }
-        
-    [button setNeedsLayout];    
-    [button setNeedsDisplay];
-}
-
-
 /*
  *  observe the notification listener when loading an audio
  */
 - (void)playbackStateChanged:(NSNotification *)notification
 {
     // AudioStreamer *theStreamer = [notification object];    
-    LOG(@"streamer's state: %d", streamer.state);
+    // LOG(@"streamer's state: %d", streamer.state);
     
 	if ([streamer isWaiting])
 	{
         button.state = AudioStateReady;
         [button startSpin];
-    }
-    else if ([streamer isPlaying])
-	{
-        [button stopSpin];
-        button.state = AudioStatePlaying;
-        [self showProgress];
-	}
-    else if ([streamer isPaused])
-    {
-        
-    }
-    else if ([streamer isFinishing])
-    {
-        [button stopSpin];
-        button.state = AudioStatePlaying;
-        [self showProgress];
-    }
-	else if ([streamer isIdle])
-	{
-        [button stopSpin];
+    }else if ([streamer isIdle]) {
         button.state = AudioStateStop;
+        [button stopSpin];        
 		[self stop];		
-	}
+	} else if ([streamer isPaused]) {
+        // pause
+    } else if ([streamer isPlaying] || [streamer isFinishing]) {
+        button.state = AudioStatePlaying;
+        [button stopSpin];        
+	} 
 }
 
 

@@ -9,6 +9,7 @@
 #import "AudioButton.h"
 #import <QuartzCore/QuartzCore.h>
 #include <math.h>
+
 static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 @implementation AudioButton
@@ -17,6 +18,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 #pragma mark -
 #pragma mark Drawing Code:
+
+
+- (void)dealloc {
+    [super dealloc];
+}
 
 
  - (void)drawRect:(CGRect)rect {
@@ -198,6 +204,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 
+#pragma 
+#pragma mark Spin Button
+
 - (void)startSpin
 {
     [CATransaction begin];
@@ -299,10 +308,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.state = AudioStateInit;
     
     return self;
-}
-
-- (void)dealloc {
-    [super dealloc];
 }
 
 
