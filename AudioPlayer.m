@@ -120,15 +120,16 @@
     
 	if ([streamer isWaiting])
 	{
-        button.image = [UIImage imageNamed:@"stop"];
+        button.image = [UIImage imageNamed:button.list ? @"stop_s" : @"stop"];
         [button startSpin];
     } else if ([streamer isIdle]) {
-        button.image = [UIImage imageNamed:@"play"];
+        button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];
 		[self stop];		
 	} else if ([streamer isPaused]) {
-        button.image = [UIImage imageNamed:@"play"];
+        button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];
+        [button stopSpin];
     } else if ([streamer isPlaying] || [streamer isFinishing]) {
-        button.image = [UIImage imageNamed:@"stop"];
+        button.image = [UIImage imageNamed:button.list ? @"stop_s" : @"stop"];
         [button stopSpin];        
 	} else {
         
