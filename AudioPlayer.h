@@ -23,7 +23,6 @@
 @property (nonatomic, retain) NSURL *url;
 
 - (void)play;
-- (void)buffer;
 - (void)stop;
 
 @end

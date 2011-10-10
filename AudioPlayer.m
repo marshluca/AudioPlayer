@@ -36,7 +36,7 @@
 }
 
 
-- (void)destroyStreamer
+- (void)stop
 {
     button.state = AudioStateStop;
     [button stopSpin];
@@ -60,7 +60,7 @@
 {   
     if (streamer) return;
     
-	[self destroyStreamer];
+	[self stop];
     
 	self.streamer = [[AudioStreamer alloc] initWithURL:self.url];
     
@@ -122,17 +122,6 @@
     [button setNeedsDisplay];
 }
 
-- (void)buffer
-{
-    [button startSpin];
-}
-
-
-- (void)stop
-{
-    [self destroyStreamer];
-}
-
 
 /*
  *  observe the notification listener when loading an audio
@@ -145,7 +134,7 @@
 	if ([streamer isWaiting])
 	{
         button.state = AudioStateReady;
-        [self buffer];
+        [button startSpin];
     }
     else if ([streamer isPlaying])
 	{
@@ -167,7 +156,7 @@
 	{
         [button stopSpin];
         button.state = AudioStateStop;
-		[self destroyStreamer];		
+		[self stop];		
 	}
 }
 
