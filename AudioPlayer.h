@@ -26,7 +26,9 @@
 - (void)createStreamer;
 - (void)destroyStreamer;
 - (void)play;
+- (void)buffer;
 - (void)stop;
+- (void)buffer;
 - (void)spinButton;
 - (void)setButtonImage:(UIImage *)image;
 
