@@ -29,7 +29,6 @@
 - (void)buffer;
 - (void)stop;
 - (void)buffer;
-- (void)spinButton;
 - (void)setButtonImage:(UIImage *)image;
 
 @end

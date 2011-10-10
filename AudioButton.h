@@ -36,8 +36,12 @@ typedef enum {
 @property (nonatomic, assign) AudioState state;
 
 - (id)initWithFrame:(CGRect)frame list:(BOOL)isList;
--(void) setProgress:(CGFloat) newProgress;		// set the component's value
--(void) setColourR:(CGFloat) r G:(CGFloat) g B:(CGFloat) b A:(CGFloat) a;	// set component colour, set using RGBA system, each value should be between 0 and 1.
--(CGFloat) progress; // returns the component's value.
+// set the component's value
+- (void) setProgress:(CGFloat) newProgress;		
+// set component colour, set using RGBA system, each value should be between 0 and 1.
+- (void) setColourR:(CGFloat) r G:(CGFloat) g B:(CGFloat) b A:(CGFloat) a;	
+- (CGFloat) progress; // returns the component's value.
+- (void)startSpin;
+- (void)stopSpin;
 
 @end
