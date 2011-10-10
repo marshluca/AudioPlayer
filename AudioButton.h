@@ -9,13 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-typedef enum {
-    AudioStateReady,
-    AudioStatePlaying,
-    AudioStateInit,
-    AudioStateStop
-} AudioState;
-
 @interface AudioButton : UIButton {
 
 	CGFloat _r;
@@ -29,11 +22,12 @@ typedef enum {
 	CGRect _innerCircleRect;
     
     BOOL list;
-    AudioState state;
+    UIImage *image;
+    UIImageView *loadingView;
 }
 
 @property (nonatomic, assign) BOOL list;
-@property (nonatomic, assign) AudioState state;
+@property (nonatomic, retain) UIImage *image;
 
 - (id)initWithFrame:(CGRect)frame list:(BOOL)isList;
 - (void)startSpin;

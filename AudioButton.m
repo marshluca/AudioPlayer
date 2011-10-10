@@ -14,7 +14,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 @implementation AudioButton
 
-@synthesize list,state;
+@synthesize list, image;
 
 #pragma mark -
 #pragma mark Drawing Code:
@@ -22,18 +22,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)dealloc {
     [super dealloc];
+    [image release];
 }
 
 
  - (void)drawRect:(CGRect)rect {
      
      [super drawRect:rect];
-          
-     NSString *loading = self.list ? @"loading" : @"loading";
-     NSString *play = self.list ? @"play_s" : @"play";
-     NSString *stop = self.list ? @"stop_s" : @"stop";
-     
-     UIImage *image = [UIImage imageNamed:state == AudioStateReady  ? loading : (state == AudioStatePlaying? stop : play)];
+               
      [image drawInRect:rect];
      
      
@@ -209,11 +205,19 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)startSpin
 {
+    if (!loadingView) {
+        loadingView = [[UIImageView alloc] initWithFrame:CGRectMake(3, 3, self.frame.size.width-6, self.frame.size.height-6)];
+        loadingView.image = [UIImage imageNamed:@"loading"];
+        [self addSubview:loadingView];
+    }
+    
+    loadingView.hidden = NO;
+    
     [CATransaction begin];
 	[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-	CGRect frame = [self frame];
-	self.layer.anchorPoint = CGPointMake(0.5, 0.5);
-	self.layer.position = CGPointMake(frame.origin.x + 0.5 * frame.size.width, frame.origin.y + 0.5 * frame.size.height);
+	CGRect frame = [loadingView frame];
+	loadingView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+	loadingView.layer.position = CGPointMake(frame.origin.x + 0.5 * frame.size.width, frame.origin.y + 0.5 * frame.size.height);
 	[CATransaction commit];
     
 	[CATransaction begin];
@@ -226,14 +230,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 	animation.toValue = [NSNumber numberWithFloat:2 * M_PI];
 	animation.timingFunction = [CAMediaTimingFunction functionWithName: kCAMediaTimingFunctionLinear];
 	animation.delegate = self;
-	[self.layer addAnimation:animation forKey:@"rotationAnimation"];
+	[loadingView.layer addAnimation:animation forKey:@"rotationAnimation"];
     
 	[CATransaction commit];
 }
 
 - (void)stopSpin
 {
-    [self.layer removeAllAnimations];
+    [loadingView.layer removeAllAnimations];
+    loadingView.hidden = YES;
 }
 
 - (void)animationDidStart:(CAAnimation *)anim
@@ -305,7 +310,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		_innerCircleRect = CGRectMake(x+offset, y+offset, radius-2*offset , radius-2*offset);		
     }
     
-    self.state = AudioStateInit;
+    self.image = [UIImage imageNamed:@"play"];
+        
     
     return self;
 }

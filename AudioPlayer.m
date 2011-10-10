@@ -47,8 +47,6 @@
         [invocation setSelector:@selector(updateProgress)];
         [invocation setTarget:self];
         
-        LOG(@"init streamer and set time updater...");
-        
         timer = [NSTimer scheduledTimerWithTimeInterval:0.1
                                              invocation:invocation 
                                                 repeats:YES];
@@ -74,7 +72,6 @@
 
 - (void)stop
 {
-    button.state = AudioStateStop;
     [button setProgress:0];
     [button stopSpin];
     [button release]; 
@@ -123,18 +120,19 @@
     
 	if ([streamer isWaiting])
 	{
-        button.state = AudioStateReady;
+        button.image = [UIImage imageNamed:@"stop"];
         [button startSpin];
-    }else if ([streamer isIdle]) {
-        button.state = AudioStateStop;
-        [button stopSpin];        
+    } else if ([streamer isIdle]) {
+        button.image = [UIImage imageNamed:@"play"];
 		[self stop];		
 	} else if ([streamer isPaused]) {
-        // pause
+        button.image = [UIImage imageNamed:@"play"];
     } else if ([streamer isPlaying] || [streamer isFinishing]) {
-        button.state = AudioStatePlaying;
+        button.image = [UIImage imageNamed:@"stop"];
         [button stopSpin];        
-	} 
+	} else {
+        
+    }
 }
 
 
