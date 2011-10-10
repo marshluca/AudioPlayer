@@ -178,6 +178,14 @@
     }
 }
 
+
+- (void)stop
+{
+    [self destroyStreamer];
+}
+
+
+
 /*
  *  observe the notification listener when loading an audio
  */
