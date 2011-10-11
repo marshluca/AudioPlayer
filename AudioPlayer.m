@@ -92,14 +92,6 @@
 	}
 }
 
-
-- (void)setButtonImage:(UIImage *)image
-{
-	// [button.layer removeAllAnimations];    
-    // [image drawInRect:button.bounds];
-    // [button setImage:image forState:UIControlStateNormal];		    
-}
-
 - (void)updateProgress
 {
     if (streamer.progress <= streamer.duration ) {
@@ -128,6 +120,7 @@
 	} else if ([streamer isPaused]) {
         button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];
         [button stopSpin];
+        [button setColourR:0.0 G:0.0 B:0.0 A:0.0];
     } else if ([streamer isPlaying] || [streamer isFinishing]) {
         button.image = [UIImage imageNamed:button.list ? @"stop_s" : @"stop"];
         [button stopSpin];        
