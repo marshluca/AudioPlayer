@@ -240,7 +240,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     [loadingView.layer removeAllAnimations];
     loadingView.hidden = YES;
-    self.image = [UIImage imageNamed:self.list ? @"play_s" : @"play"];
     [self setColourR:0.1 G:1.0 B:0.1 A:1.0];
 }
 

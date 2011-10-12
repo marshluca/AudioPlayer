@@ -71,8 +71,9 @@
 
 
 - (void)stop
-{
+{    
     [button setProgress:0];
+    button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];    
     [button stopSpin];
     [button release]; 
     // 避免播放器的闪烁问题
