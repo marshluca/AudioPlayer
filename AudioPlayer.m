@@ -35,6 +35,11 @@
 }
 
 
+- (BOOL)isProcessing
+{
+    return [streamer isPlaying] || [streamer isWaiting] || [streamer isFinishing] ;
+}
+
 - (void)play
 {        
     if (!streamer) {

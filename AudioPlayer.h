@@ -24,5 +24,6 @@
 
 - (void)play;
 - (void)stop;
+- (BOOL)isProcessing;
 
 @end
