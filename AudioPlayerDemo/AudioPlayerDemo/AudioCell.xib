@@ -66,7 +66,7 @@
 								</object>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">play_s@2x.png</string>
+									<string key="NSResourceName">play.png</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
 									<int key="type">2</int>
@@ -303,7 +303,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">play_s@2x.png</string>
+			<string key="NS.key.0">play.png</string>
 			<string key="NS.object.0">{64, 64}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1181</string>
