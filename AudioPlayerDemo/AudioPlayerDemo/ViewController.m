@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 #import "AudioCell.h"
+#import "AudioPlayer.h"
+
+static NSArray *itemArray;
 
 @interface ViewController ()
 
@@ -21,6 +24,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    itemArray = [NSArray arrayWithObjects:
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"", @"song", @"", @"artise", @"", @"url", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"", @"song", @"", @"artise", @"", @"url", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"", @"song", @"", @"artise", @"", @"url", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"", @"song", @"", @"artise", @"", @"url", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"", @"song", @"", @"artise", @"", @"url", nil],
+                 [NSDictionary dictionaryWithObjectsAndKeys:@"", @"song", @"", @"artise", @"", @"url", nil],
+                 nil];
 }
 
 - (void)viewDidUnload
@@ -28,6 +40,25 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     self.tableView = nil;
+}
+
+- (void)playAudio:(AudioButton *)button
+{
+    if (_audioPlayer) {
+        _audioPlayer = [[AudioPlayer alloc] init];
+    }
+    
+    if ([_audioPlayer.button isEqual:button]) {
+        [_audioPlayer play];
+    } else {
+        [_audioPlayer stop];
+        
+        _audioPlayer.button = [button retain];   
+        
+        NSDictionary *item = [itemArray objectAtIndex:button.tag];
+        _audioPlayer.url = [NSURL URLWithString:[item objectForKey:@"url"]];
+        [_audioPlayer play];
+    }   
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -45,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [itemArray count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,6 +97,8 @@
     // Configure the cell...
     cell.titleLabel.text = [NSString stringWithFormat:@"I love you %d", indexPath.row];
     cell.artistLabel.text = @"Lucas";
+    cell.audioButton.tag = indexPath.row;
+    [cell.audioButton addTarget:self action:@selector(playAudio:) forControlEvents:UIControlEventTouchUpInside];    
     
     return cell;
 }

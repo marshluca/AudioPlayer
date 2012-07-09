@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class AudioPlayer;
+
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+{
+    AudioPlayer *_audioPlayer;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
