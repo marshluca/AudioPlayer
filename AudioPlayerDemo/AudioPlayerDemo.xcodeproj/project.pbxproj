@@ -26,6 +26,9 @@
 		631FAE9D15AB1B1F00CFAF36 /* play_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */; };
 		631FAE9E15AB1B1F00CFAF36 /* stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9515AB1B1F00CFAF36 /* stop@2x.png */; };
 		631FAE9F15AB1B1F00CFAF36 /* stop_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */; };
+		631FAEA115AB1F0F00CFAF36 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FAEA015AB1F0F00CFAF36 /* QuartzCore.framework */; };
+		631FAEA315AB1F4300CFAF36 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FAEA215AB1F4200CFAF36 /* AudioToolbox.framework */; };
+		631FAEA515AB1F6400CFAF36 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FAEA415AB1F6400CFAF36 /* CFNetwork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,9 @@
 		631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_s@2x.png"; sourceTree = "<group>"; };
 		631FAE9515AB1B1F00CFAF36 /* stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop@2x.png"; sourceTree = "<group>"; };
 		631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_s@2x.png"; sourceTree = "<group>"; };
+		631FAEA015AB1F0F00CFAF36 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		631FAEA215AB1F4200CFAF36 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		631FAEA415AB1F6400CFAF36 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				631FAEA515AB1F6400CFAF36 /* CFNetwork.framework in Frameworks */,
+				631FAEA315AB1F4300CFAF36 /* AudioToolbox.framework in Frameworks */,
+				631FAEA115AB1F0F00CFAF36 /* QuartzCore.framework in Frameworks */,
 				322834BF15A542B100E3C085 /* UIKit.framework in Frameworks */,
 				322834C115A542B100E3C085 /* Foundation.framework in Frameworks */,
 				322834C315A542B100E3C085 /* CoreGraphics.framework in Frameworks */,
@@ -93,6 +102,9 @@
 		322834BD15A542B100E3C085 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				631FAEA415AB1F6400CFAF36 /* CFNetwork.framework */,
+				631FAEA215AB1F4200CFAF36 /* AudioToolbox.framework */,
+				631FAEA015AB1F0F00CFAF36 /* QuartzCore.framework */,
 				322834BE15A542B100E3C085 /* UIKit.framework */,
 				322834C015A542B100E3C085 /* Foundation.framework */,
 				322834C215A542B100E3C085 /* CoreGraphics.framework */,
