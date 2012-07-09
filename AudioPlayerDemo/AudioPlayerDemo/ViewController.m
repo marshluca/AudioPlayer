@@ -48,6 +48,11 @@
     return 10;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70.f;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"AudioCell";
@@ -59,7 +64,7 @@
     }
     
     // Configure the cell...
-    cell.titleLabel.text = @"I love you";
+    cell.titleLabel.text = [NSString stringWithFormat:@"I love you %d", indexPath.row];
     cell.artistLabel.text = @"Lucas";
     
     return cell;
