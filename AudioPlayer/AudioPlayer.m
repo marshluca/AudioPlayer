@@ -78,7 +78,7 @@
 - (void)stop
 {    
     [button setProgress:0];
-    button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];    
+    button.image = [UIImage imageNamed:@"play"];    
     [button stopSpin];
     [button release]; 
     // 避免播放器的闪烁问题
@@ -118,17 +118,17 @@
     
 	if ([streamer isWaiting])
 	{
-        button.image = [UIImage imageNamed:button.list ? @"stop_s" : @"stop"];
+        button.image = [UIImage imageNamed:@"stop"];
         [button startSpin];
     } else if ([streamer isIdle]) {
-        button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];
+        button.image = [UIImage imageNamed:@"play"];
 		[self stop];		
 	} else if ([streamer isPaused]) {
-        button.image = [UIImage imageNamed:button.list ? @"play_s" : @"play"];
+        button.image = [UIImage imageNamed:@"play"];
         [button stopSpin];
         [button setColourR:0.0 G:0.0 B:0.0 A:0.0];
     } else if ([streamer isPlaying] || [streamer isFinishing]) {
-        button.image = [UIImage imageNamed:button.list ? @"stop_s" : @"stop"];
+        button.image = [UIImage imageNamed:@"stop"];
         [button stopSpin];        
 	} else {
         

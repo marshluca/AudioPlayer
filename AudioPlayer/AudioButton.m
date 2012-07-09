@@ -14,7 +14,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 @implementation AudioButton
 
-@synthesize list, image;
+@synthesize image;
 
 #pragma mark -
 #pragma mark Drawing Code:
@@ -33,8 +33,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
      [image drawInRect:rect];
      
      
- // Drawing code.
-	 
 	 // get the drawing canvas (CGContext):
 	 CGContextRef context = UIGraphicsGetCurrentContext();
 	 
@@ -263,11 +261,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #pragma mark -
 #pragma mark Superclass Methods:
 
-- (id)initWithFrame:(CGRect)frame list:(BOOL)isList {
+- (id)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
-    
-    self.list = isList;
     
     if (self) {
         // Initialization code.
@@ -303,7 +299,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 			x = 0;
 		}
 		
-        int offset = isList ? 3 : 6;
+        int offset = 3;
         
 		// store the largest circle's position and radius in class variable.
 		_outerCircleRect = CGRectMake(x, y, radius, radius);
@@ -312,7 +308,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 		_innerCircleRect = CGRectMake(x+offset, y+offset, radius-2*offset , radius-2*offset);		
     }
     
-    self.image = [UIImage imageNamed:self.list ? @"play_s" : @"play"];
+    self.image = [UIImage imageNamed: @"play"];
         
     
     return self;

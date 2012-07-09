@@ -21,15 +21,13 @@
 	CGRect _outerCircleRect;
 	CGRect _innerCircleRect;
     
-    BOOL list;
     UIImage *image;
     UIImageView *loadingView;
 }
 
-@property (nonatomic, assign) BOOL list;
 @property (nonatomic, retain) UIImage *image;
 
-- (id)initWithFrame:(CGRect)frame list:(BOOL)isList;
+- (id)initWithFrame:(CGRect)frame;
 - (void)startSpin;
 - (void)stopSpin;
 - (CGFloat)progress;

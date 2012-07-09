@@ -21,11 +21,8 @@
 		631FAE9815AB1B1F00CFAF36 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FAE8D15AB1B1F00CFAF36 /* AudioPlayer.m */; };
 		631FAE9915AB1B1F00CFAF36 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FAE8F15AB1B1F00CFAF36 /* AudioStreamer.m */; };
 		631FAE9A15AB1B1F00CFAF36 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9115AB1B1F00CFAF36 /* loading.png */; };
-		631FAE9B15AB1B1F00CFAF36 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9215AB1B1F00CFAF36 /* loading@2x.png */; };
-		631FAE9C15AB1B1F00CFAF36 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9315AB1B1F00CFAF36 /* play@2x.png */; };
-		631FAE9D15AB1B1F00CFAF36 /* play_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */; };
-		631FAE9E15AB1B1F00CFAF36 /* stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9515AB1B1F00CFAF36 /* stop@2x.png */; };
-		631FAE9F15AB1B1F00CFAF36 /* stop_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */; };
+		631FAE9D15AB1B1F00CFAF36 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9415AB1B1F00CFAF36 /* play.png */; };
+		631FAE9F15AB1B1F00CFAF36 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9615AB1B1F00CFAF36 /* stop.png */; };
 		631FAEA115AB1F0F00CFAF36 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FAEA015AB1F0F00CFAF36 /* QuartzCore.framework */; };
 		631FAEA315AB1F4300CFAF36 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FAEA215AB1F4200CFAF36 /* AudioToolbox.framework */; };
 		631FAEA515AB1F6400CFAF36 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 631FAEA415AB1F6400CFAF36 /* CFNetwork.framework */; };
@@ -55,11 +52,8 @@
 		631FAE8E15AB1B1F00CFAF36 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
 		631FAE8F15AB1B1F00CFAF36 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
 		631FAE9115AB1B1F00CFAF36 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
-		631FAE9215AB1B1F00CFAF36 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
-		631FAE9315AB1B1F00CFAF36 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
-		631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_s@2x.png"; sourceTree = "<group>"; };
-		631FAE9515AB1B1F00CFAF36 /* stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop@2x.png"; sourceTree = "<group>"; };
-		631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_s@2x.png"; sourceTree = "<group>"; };
+		631FAE9415AB1B1F00CFAF36 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		631FAE9615AB1B1F00CFAF36 /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 		631FAEA015AB1F0F00CFAF36 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		631FAEA215AB1F4200CFAF36 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		631FAEA415AB1F6400CFAF36 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -159,11 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				631FAE9115AB1B1F00CFAF36 /* loading.png */,
-				631FAE9215AB1B1F00CFAF36 /* loading@2x.png */,
-				631FAE9315AB1B1F00CFAF36 /* play@2x.png */,
-				631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */,
-				631FAE9515AB1B1F00CFAF36 /* stop@2x.png */,
-				631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */,
+				631FAE9415AB1B1F00CFAF36 /* play.png */,
+				631FAE9615AB1B1F00CFAF36 /* stop.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -222,11 +213,8 @@
 				322834D515A542B100E3C085 /* ViewController.xib in Resources */,
 				631FAE8815AB19EE00CFAF36 /* AudioCell.xib in Resources */,
 				631FAE9A15AB1B1F00CFAF36 /* loading.png in Resources */,
-				631FAE9B15AB1B1F00CFAF36 /* loading@2x.png in Resources */,
-				631FAE9C15AB1B1F00CFAF36 /* play@2x.png in Resources */,
-				631FAE9D15AB1B1F00CFAF36 /* play_s@2x.png in Resources */,
-				631FAE9E15AB1B1F00CFAF36 /* stop@2x.png in Resources */,
-				631FAE9F15AB1B1F00CFAF36 /* stop_s@2x.png in Resources */,
+				631FAE9D15AB1B1F00CFAF36 /* play.png in Resources */,
+				631FAE9F15AB1B1F00CFAF36 /* stop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
