@@ -15,6 +15,17 @@
 		322834CF15A542B100E3C085 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 322834CE15A542B100E3C085 /* AppDelegate.m */; };
 		322834D215A542B100E3C085 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 322834D115A542B100E3C085 /* ViewController.m */; };
 		322834D515A542B100E3C085 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 322834D315A542B100E3C085 /* ViewController.xib */; };
+		631FAE8515AB199F00CFAF36 /* AudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FAE8415AB199F00CFAF36 /* AudioCell.m */; };
+		631FAE8815AB19EE00CFAF36 /* AudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE8715AB19EE00CFAF36 /* AudioCell.xib */; };
+		631FAE9715AB1B1F00CFAF36 /* AudioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FAE8B15AB1B1F00CFAF36 /* AudioButton.m */; };
+		631FAE9815AB1B1F00CFAF36 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FAE8D15AB1B1F00CFAF36 /* AudioPlayer.m */; };
+		631FAE9915AB1B1F00CFAF36 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = 631FAE8F15AB1B1F00CFAF36 /* AudioStreamer.m */; };
+		631FAE9A15AB1B1F00CFAF36 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9115AB1B1F00CFAF36 /* loading.png */; };
+		631FAE9B15AB1B1F00CFAF36 /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9215AB1B1F00CFAF36 /* loading@2x.png */; };
+		631FAE9C15AB1B1F00CFAF36 /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9315AB1B1F00CFAF36 /* play@2x.png */; };
+		631FAE9D15AB1B1F00CFAF36 /* play_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */; };
+		631FAE9E15AB1B1F00CFAF36 /* stop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9515AB1B1F00CFAF36 /* stop@2x.png */; };
+		631FAE9F15AB1B1F00CFAF36 /* stop_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +42,21 @@
 		322834D015A542B100E3C085 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		322834D115A542B100E3C085 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		322834D415A542B100E3C085 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		631FAE8315AB199F00CFAF36 /* AudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioCell.h; sourceTree = "<group>"; };
+		631FAE8415AB199F00CFAF36 /* AudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioCell.m; sourceTree = "<group>"; };
+		631FAE8715AB19EE00CFAF36 /* AudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioCell.xib; sourceTree = "<group>"; };
+		631FAE8A15AB1B1F00CFAF36 /* AudioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioButton.h; sourceTree = "<group>"; };
+		631FAE8B15AB1B1F00CFAF36 /* AudioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioButton.m; sourceTree = "<group>"; };
+		631FAE8C15AB1B1F00CFAF36 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
+		631FAE8D15AB1B1F00CFAF36 /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
+		631FAE8E15AB1B1F00CFAF36 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
+		631FAE8F15AB1B1F00CFAF36 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
+		631FAE9115AB1B1F00CFAF36 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		631FAE9215AB1B1F00CFAF36 /* loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading@2x.png"; sourceTree = "<group>"; };
+		631FAE9315AB1B1F00CFAF36 /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_s@2x.png"; sourceTree = "<group>"; };
+		631FAE9515AB1B1F00CFAF36 /* stop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop@2x.png"; sourceTree = "<group>"; };
+		631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop_s@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,11 +103,15 @@
 		322834C415A542B100E3C085 /* AudioPlayerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				631FAE8915AB1B1F00CFAF36 /* AudioPlayer */,
 				322834CD15A542B100E3C085 /* AppDelegate.h */,
 				322834CE15A542B100E3C085 /* AppDelegate.m */,
 				322834D015A542B100E3C085 /* ViewController.h */,
 				322834D115A542B100E3C085 /* ViewController.m */,
 				322834D315A542B100E3C085 /* ViewController.xib */,
+				631FAE8315AB199F00CFAF36 /* AudioCell.h */,
+				631FAE8415AB199F00CFAF36 /* AudioCell.m */,
+				631FAE8715AB19EE00CFAF36 /* AudioCell.xib */,
 				322834C515A542B100E3C085 /* Supporting Files */,
 			);
 			path = AudioPlayerDemo;
@@ -96,6 +126,34 @@
 				322834CC15A542B100E3C085 /* AudioPlayerDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		631FAE8915AB1B1F00CFAF36 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				631FAE8A15AB1B1F00CFAF36 /* AudioButton.h */,
+				631FAE8B15AB1B1F00CFAF36 /* AudioButton.m */,
+				631FAE8C15AB1B1F00CFAF36 /* AudioPlayer.h */,
+				631FAE8D15AB1B1F00CFAF36 /* AudioPlayer.m */,
+				631FAE8E15AB1B1F00CFAF36 /* AudioStreamer.h */,
+				631FAE8F15AB1B1F00CFAF36 /* AudioStreamer.m */,
+				631FAE9015AB1B1F00CFAF36 /* images */,
+			);
+			name = AudioPlayer;
+			path = ../../AudioPlayer;
+			sourceTree = "<group>";
+		};
+		631FAE9015AB1B1F00CFAF36 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				631FAE9115AB1B1F00CFAF36 /* loading.png */,
+				631FAE9215AB1B1F00CFAF36 /* loading@2x.png */,
+				631FAE9315AB1B1F00CFAF36 /* play@2x.png */,
+				631FAE9415AB1B1F00CFAF36 /* play_s@2x.png */,
+				631FAE9515AB1B1F00CFAF36 /* stop@2x.png */,
+				631FAE9615AB1B1F00CFAF36 /* stop_s@2x.png */,
+			);
+			path = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +208,13 @@
 			files = (
 				322834C915A542B100E3C085 /* InfoPlist.strings in Resources */,
 				322834D515A542B100E3C085 /* ViewController.xib in Resources */,
+				631FAE8815AB19EE00CFAF36 /* AudioCell.xib in Resources */,
+				631FAE9A15AB1B1F00CFAF36 /* loading.png in Resources */,
+				631FAE9B15AB1B1F00CFAF36 /* loading@2x.png in Resources */,
+				631FAE9C15AB1B1F00CFAF36 /* play@2x.png in Resources */,
+				631FAE9D15AB1B1F00CFAF36 /* play_s@2x.png in Resources */,
+				631FAE9E15AB1B1F00CFAF36 /* stop@2x.png in Resources */,
+				631FAE9F15AB1B1F00CFAF36 /* stop_s@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +228,10 @@
 				322834CB15A542B100E3C085 /* main.m in Sources */,
 				322834CF15A542B100E3C085 /* AppDelegate.m in Sources */,
 				322834D215A542B100E3C085 /* ViewController.m in Sources */,
+				631FAE8515AB199F00CFAF36 /* AudioCell.m in Sources */,
+				631FAE9715AB1B1F00CFAF36 /* AudioButton.m in Sources */,
+				631FAE9815AB1B1F00CFAF36 /* AudioPlayer.m in Sources */,
+				631FAE9915AB1B1F00CFAF36 /* AudioStreamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +341,7 @@
 				322834DA15A542B100E3C085 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
