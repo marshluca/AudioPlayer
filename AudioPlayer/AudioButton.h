@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *playImage, *stopImage;
 
 @interface AudioButton : UIButton {
 
