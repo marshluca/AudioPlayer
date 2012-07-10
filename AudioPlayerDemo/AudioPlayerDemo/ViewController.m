@@ -33,12 +33,15 @@ static NSArray *itemArray;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    self.title = @"音乐列表";
+    
     itemArray = [[NSArray arrayWithObjects:
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"需要你的爱", @"song", @"飞儿乐团", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/6/29/36232/eialz31cbktv21nyfhyoxeygzmhr6hw1w8rshpkj.mp3", @"url", nil],
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"对不起谢谢", @"song", @"陈奕迅", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/6/29/36212/ohdu07cbss0miqwdelq2zurp654t2y7xmvuysej8.mp3", @"url", nil],
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"桔子香水", @"song", @"任贤齐", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/6/29/36195/mx8an3zgp2k4s5aywkr7wkqtqj0dh1vxcvii287a.mp3", @"url", nil],
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"Could this be love", @"song", @"艾薇儿", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/6/29/36183/mlrqllqafo1xoemkkwili0al2pt8nwotyhed3mmv.mp3", @"url", nil],
-                 [NSDictionary dictionaryWithObjectsAndKeys:@"天涯海角", @"song", @"王力宏", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/6/28/36080/71b7tpk44lbmxuu7gagzlnpzt7i3okitvg5el3it.mp3", @"url", nil],
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"温柔", @"song", @"五月天", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/5/18/34049/oiuxsvnbtxks7a0tg6xpdo66exdhi8h0bplp7twp.mp3", @"url", nil],
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"今天", @"song", @"刘德华", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/5/18/34045/hi4dwfmrxm2citwjcc5841z3tiqaeeoczhbtfoex.mp3", @"url", nil],
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"K歌之王", @"song", @"陈奕迅", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/5/17/34031/axiddhql6nhaegcofs4hgsjrllrcbrf175oyjuv0.mp3", @"url", nil],
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"知足", @"song", @"五月天", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/5/17/34016/eeemlurxuizy6nltxf2u1yris3kpvdokwhddmeb0.mp3", @"url", nil],
+                  [NSDictionary dictionaryWithObjectsAndKeys:@"桔子香水", @"song", @"任贤齐", @"artise", @"http://y1.eoews.com/assets/ringtones/2012/6/29/36195/mx8an3zgp2k4s5aywkr7wkqtqj0dh1vxcvii287a.mp3", @"url", nil],
+                  
                  nil] retain];
 }
 
@@ -106,7 +109,7 @@ static NSArray *itemArray;
     
     // Configure the cell..
     NSDictionary *item = [itemArray objectAtIndex:indexPath.row];
-
+    
     cell.titleLabel.text = [item objectForKey:@"song"];
     cell.artistLabel.text = [item objectForKey:@"artise"];
     cell.audioButton.tag = indexPath.row;
@@ -119,7 +122,7 @@ static NSArray *itemArray;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // to be rewrite in subclass    
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
