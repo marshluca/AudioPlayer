@@ -61,7 +61,6 @@
                                                  selector:@selector(playbackStateChanged:)
                                                      name:ASStatusChangedNotification
                                                    object:streamer];
-
     }
     
     if ([streamer isPlaying]) {
@@ -69,20 +68,17 @@
     } else {
         [streamer start];
     }
-        
-    [button setNeedsLayout];    
-    [button setNeedsDisplay];
 }
 
 
 - (void)stop
 {    
     [button setProgress:0];
-    button.image = [UIImage imageNamed:@"play"];    
     [button stopSpin];
-    [button release]; 
-    // 避免播放器的闪烁问题
-    button = nil;
+
+    button.image = [UIImage imageNamed:playImage];
+    button = nil; // 避免播放器的闪烁问题        
+    [button release];     
     
     // release streamer
 	if (streamer)
@@ -113,26 +109,26 @@
  */
 - (void)playbackStateChanged:(NSNotification *)notification
 {
-    // AudioStreamer *theStreamer = [notification object];    
-    // LOG(@"streamer's state: %d", streamer.state);
-    
 	if ([streamer isWaiting])
 	{
-        button.image = [UIImage imageNamed:@"stop"];
+        button.image = [UIImage imageNamed:stopImage];
         [button startSpin];
     } else if ([streamer isIdle]) {
-        button.image = [UIImage imageNamed:@"play"];
+        button.image = [UIImage imageNamed:playImage];
 		[self stop];		
 	} else if ([streamer isPaused]) {
-        button.image = [UIImage imageNamed:@"play"];
+        button.image = [UIImage imageNamed:playImage];
         [button stopSpin];
         [button setColourR:0.0 G:0.0 B:0.0 A:0.0];
     } else if ([streamer isPlaying] || [streamer isFinishing]) {
-        button.image = [UIImage imageNamed:@"stop"];
+        button.image = [UIImage imageNamed:stopImage];
         [button stopSpin];        
 	} else {
         
     }
+    
+    [button setNeedsLayout];    
+    [button setNeedsDisplay];
 }
 
 

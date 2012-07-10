@@ -50,20 +50,23 @@ static NSArray *itemArray;
 }
 
 - (void)playAudio:(AudioButton *)button
-{
+{    
     NSInteger index = button.tag;
     NSDictionary *item = [itemArray objectAtIndex:index];
     
     if (_audioPlayer == nil) {
         _audioPlayer = [[AudioPlayer alloc] init];
     }
-    
-    _audioPlayer.url = [NSURL URLWithString:[item objectForKey:@"url"]];
-    
+        
     if ([_audioPlayer.button isEqual:button]) {
         [_audioPlayer play];
     } else {
         [_audioPlayer stop];
+        
+        _audioPlayer.button = button; 
+        _audioPlayer.url = [NSURL URLWithString:[item objectForKey:@"url"]];
+
+        [_audioPlayer play];
     }   
 }
 
@@ -98,6 +101,7 @@ static NSArray *itemArray;
     if (cell == nil) {
         NSArray *nibArray = [[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil];
         cell = (AudioCell *)[nibArray objectAtIndex:0];
+        [cell configurePlayerButton];
     }
     
     // Configure the cell..
