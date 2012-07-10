@@ -28,4 +28,11 @@
     // Configure the view for the selected state
 }
 
+- (void)configurePlayerButton
+{
+    // use initWithFrame to drawRect instead of initWithCoder from xib
+    self.audioButton = [[AudioButton alloc] initWithFrame:CGRectMake(20, 10, 50, 50)];    
+    [self.contentView addSubview:self.audioButton];
+}
+
 @end

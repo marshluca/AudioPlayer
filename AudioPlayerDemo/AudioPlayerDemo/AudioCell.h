@@ -15,4 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *artistLabel;
 @property (strong, nonatomic) IBOutlet AudioButton *audioButton;
 
+- (void)configurePlayerButton;
+
 @end
